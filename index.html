@@ -1,26 +1,17 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>05111840000093</title>
-		<style>
-            * {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                overflow-y: hidden;
-                background-color: white;
-            }
-            #rightCanvas {
-                float: right;
-            }
-        </style>
-	</head>
-	<body onload="InitDemo();" onresize = "resize()" onclick="fullscreen()">
-		<canvas id="model">
-			Your browser does not support HTML5
-		</canvas>
-		<br />
-		<i>Demo is above this text</i>
-		<script src="gl-matrix.js"></script>
-        <script src="app.js"></script>
-	</body>
+<head>
+  <title>Tugas 1 - Muhammad Afif Fadhlurrahman</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+<body onclick="fullscreen()" onload="main()" onresize = "resize()">
+  <canvas id="leftCanvas">
+    Peramban web ini tidak mendukung <code>&lt;canvas&gt;</code> HTML5.
+  </canvas>
+  <canvas id="rightCanvas">
+  </canvas>
+  <script type="text/javascript" src="index.js"></script>
+</body>
 </html>
