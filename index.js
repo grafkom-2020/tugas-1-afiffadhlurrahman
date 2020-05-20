@@ -232,6 +232,7 @@ function main() {
         rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
         resized = false;
     }
+	//UPDATE INI
         // rotX -= 0.25;
         // rotY -= 0.75;
         // rotZ += 0.5;
