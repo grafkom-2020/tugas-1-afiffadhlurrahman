@@ -182,7 +182,9 @@ function main() {
     precision mediump float;
     varying vec3 vColor;
     void main() {
-      gl_FragColor = vec4(vColor, 1.0);
+      float ambientlight = 0.2;
+      vec3 color = ambientlight * vColor;
+      gl_FragColor = vec4(color, 1.0);
     }
   `
     var rightVertexShaderCode = `
@@ -200,7 +202,9 @@ function main() {
       precision mediump float;
       varying vec3 vColor;
       void main() {
-        gl_FragColor = vec4(vColor, 1.0);
+        float ambientlight = 0.2;
+        vec3 color = ambientlight * vColor;
+        gl_FragColor = vec4(color, 1.0);
       }
     `
 
