@@ -232,26 +232,26 @@ function main() {
         rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
         resized = false;
     }
-        rotX -= 0.25;
-        rotY -= 0.75;
-        rotZ += 0.5;
-        if (rotX > 360) rotX += 360;
-        if (rotY > 360) rotY += 360;
-        if (rotZ > 360) rotZ += 360;
+        // rotX -= 0.25;
+        // rotY -= 0.75;
+        // rotZ += 0.5;
+        // if (rotX > 360) rotX += 360;
+        // if (rotY > 360) rotY += 360;
+        // if (rotZ > 360) rotZ += 360;
 
         var leftModelMatrix = [...identity];
-		leftModelMatrix[10] = -1;
-		leftModelMatrix = translate(leftModelMatrix, 0, 0.3, 0);
-		leftModelMatrix = rotateZ(leftModelMatrix, rotZ);
+		    leftModelMatrix[10] = -1;
+        leftModelMatrix = translate(leftModelMatrix, 0, 0.3, 0);
+        leftModelMatrix = rotateZ(leftModelMatrix, rotZ);
 
         var leftModel = leftGL.getUniformLocation(leftShaderProgram, "uModel");
         leftGL.uniformMatrix4fv(leftModel, false, new Float32Array(leftModelMatrix));
         
         var rightModelMatrix = [...identity];
-		rightModelMatrix = translate(rightModelMatrix, 0, -0.3, 0);
-		rightModelMatrix = rotateX(rightModelMatrix, rotX);
-		rightModelMatrix = rotateY(rightModelMatrix, rotY);
-		rightModelMatrix = scale(rightModelMatrix, 2, 2, 2);
+        rightModelMatrix = translate(rightModelMatrix, 0, -0.3, 0);
+        rightModelMatrix = rotateX(rightModelMatrix, rotX);
+        rightModelMatrix = rotateY(rightModelMatrix, rotY);
+        rightModelMatrix = scale(rightModelMatrix, 2, 2, 2);
         rightModelMatrix = translate(rightModelMatrix, 0, 0, -4);
         
         var rightModel = rightGL.getUniformLocation(rightShaderProgram, "uModel");
@@ -263,12 +263,12 @@ function main() {
         rightGL.drawArrays(rightGL.TRIANGLES, 0, cubeVertices.length);
         requestAnimationFrame(render);
   }
-  leftGL.clearColor(0.75, 0.75, 0.75, 1.0);
-  leftGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, leftGL.canvas.width, leftGL.canvas.width);
-  rightGL.clearColor(0.0, 0.0, 0.0, 1.0);
-  rightGL.enable(rightGL.DEPTH_TEST);
-  rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
-  render();
+    leftGL.clearColor(0.75, 0.75, 0.75, 1.0);
+    leftGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, leftGL.canvas.width, leftGL.canvas.width);
+    rightGL.clearColor(0.0, 0.0, 0.0, 1.0);
+    rightGL.enable(rightGL.DEPTH_TEST);
+    rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
+    render();
 }
 
 function rotateX(matrix, theta) {
