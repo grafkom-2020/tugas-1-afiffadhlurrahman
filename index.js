@@ -1,6 +1,7 @@
 let full = false;
 let resized = false;
 const identity = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+var keyboard  = {};
 
 function main() {
 
@@ -21,15 +22,23 @@ function main() {
       0.3, -0.3,
       0.3, 0.3,
     
-      
       0.3,  0.3,
       0.3,  0.1,
       0.5,  0.1,
 
       0.3,  0.3,
       0.5,  0.1,
-      0.5,  0.3
+      0.5,  0.3,
+
+      -0.5,  0.5,
+      -0.5,  -1.0,
+      0.5,  -1.0,
+
+      -0.5,  0.5,
+      0.5,  -1.0,
+      0.5,  0.5
     ];
+
 
     // Inisiasi verteks kubus
     var cubeVertices = [];
@@ -62,7 +71,18 @@ function main() {
       [ 0.1 ,   -0.2,   0.2],   // F, 13
       [ 0.15,   -0.2,   0.2],   // G, 14
       [ 0.15,      0,   0.2],    // H, 15
+
+      // //Alas
+      [-1.0,  1.0,  0.0],   // A, 16
+      [-1.0, -1.0,  0.0],   // B, 17
+      [ 1.0, -1.0,  0.0],   // C, 18
+      [ 1.0,  1.0,  0.0],   // D, 19
+      [-1.0,  1.0,  0.0],   // E, 20
+      [-1.0, -1.0,  0.0],   // F, 21
+      [ 1.0, -1.0,  0.0],   // G, 22
+      [ 1.0,  1.0, 0.0],    // H, 23
     ];
+
     var cubeColors = [
         [],
         [0.1, 0.1, 0.1],    // merah
@@ -87,6 +107,15 @@ function main() {
         [0.2, 0.2, 0.2],    // abu abu, 12, abu gelap
         [0.6, 0.6, 0.6],    // abu abu, 13 -> 9
         [0.1, 0.1, 0.1],    // abu abu, 14 -> 11
+        [],
+        [],
+        // NRP 9, 48, 147
+        [9/255, 48/255, 147/255],
+        [9/255, 48/255, 147/255],
+        [9/255, 48/255, 147/255],
+        [9/255, 48/255, 147/255],
+        [9/255, 48/255, 147/255],
+        [9/255, 48/255, 147/255],
         []
     ];
     function quad(a, b, c, d) {
@@ -122,6 +151,13 @@ function main() {
     quad(21, 20, 23, 14);  // Kubus belakang
     quad(22, 18, 17, 21);   // Kubus bawah
 
+    quad(25, 26, 27, 24);    // Kubus depan
+    quad(26, 30, 31, 27);  // Kubus kanan
+    quad(27, 31, 28, 24);   // Kubus atas
+    quad(28, 29, 25, 24);    // Kubus kiri
+    quad(29, 28, 31, 14);  // Kubus belakang
+    quad(30, 26, 25, 29);   // Kubus bawah
+
     // Inisiasi VBO (Vertex Buffer Object)
     var leftVertexBuffer = leftGL.createBuffer();
     leftGL.bindBuffer(leftGL.ARRAY_BUFFER, leftVertexBuffer);
@@ -139,7 +175,7 @@ function main() {
     attribute vec3 aColor;
     varying vec3 vColor;
     void main(void) {
-      gl_Position = uModel * vec4(aPosition, -0.5, 1.0);
+      gl_Position = uModel * vec4(aPosition, -0.7, 1.0);
     }
   `
   var leftFragmentShaderCode = `
@@ -232,7 +268,6 @@ function main() {
         rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
         resized = false;
     }
-	//UPDATE INI
         // rotX -= 0.25;
         // rotY -= 0.75;
         // rotZ += 0.5;
@@ -377,3 +412,16 @@ function fullscreen()
       }
       full = !full;
     }
+
+  function keyUp(event){
+      keyboard[event.keyCode] = false;
+  }
+  
+  function keyDown(event){
+      keyboard[event.keyCode] = true;
+  }
+  
+  window.addEventListener('resize',onWindowResize,false);
+  window.addEventListener('keydown',keyDown);
+  window.addEventListener('keyup',keyUp);
+  
