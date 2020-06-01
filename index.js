@@ -13,22 +13,22 @@ function main() {
 
     // Inisiasi verteks persegi
     var rectangleVertices = [
-      -0.3,  0.3,
-      -0.3, -0.3,
-      0.3, -0.3,
+      -0.3,  0.3, 0.6, 0.6, 0.6,
+      -0.3, -0.3, 0.6, 0.6, 0.6,
+      0.3, -0.3, 0.6, 0.6, 0.6,
     
-      -0.3,  0.3,  
-      0.3, -0.3,
-      0.3, 0.3,
+      -0.3,  0.3, 0.6, 0.6, 0.6,
+      0.3, -0.3, 0.6, 0.6, 0.6,
+      0.3, 0.3, 0.6, 0.6, 0.6,
     
       
-      0.3,  0.3,
-      0.3,  0.1,
-      0.5,  0.1,
+      0.3,  0.3, 0.6, 0.6, 0.6,
+      0.3,  0.1, 0.6, 0.6, 0.6,
+      0.5,  0.1, 0.6, 0.6, 0.6,
 
-      0.3,  0.3,
-      0.5,  0.1,
-      0.5,  0.3
+      0.3,  0.3, 0.6, 0.6, 0.6,
+      0.5,  0.1, 0.6, 0.6, 0.6,
+      0.5,  0.3, 0.6, 0.6, 0.6
     ];
 
     // Inisiasi verteks kubus
@@ -139,6 +139,7 @@ function main() {
     attribute vec3 aColor;
     varying vec3 vColor;
     void main(void) {
+      vColor = aColor;
       gl_Position = uModel * vec4(aPosition, -0.5, 1.0);
     }
   `
@@ -196,17 +197,16 @@ function main() {
   // Pengikatan VBO dan pengarahan pointer atribut posisi dan warna
   leftGL.bindBuffer(leftGL.ARRAY_BUFFER, leftVertexBuffer);
   var leftPosition = leftGL.getAttribLocation(leftShaderProgram, "aPosition");
-  leftGL.vertexAttribPointer(leftPosition, 2, leftGL.FLOAT, false, 2 * Float32Array.BYTES_PER_ELEMENT, 0);
+  leftGL.vertexAttribPointer(leftPosition, 2, leftGL.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
   leftGL.enableVertexAttribArray(leftPosition);
+  var leftcolor = leftGL.getAttribLocation(leftShaderProgram, "aColor");
+  leftGL.vertexAttribPointer(leftcolor, 3, leftGL.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+  leftGL.enableVertexAttribArray(leftcolor);
 
   rightGL.bindBuffer(rightGL.ARRAY_BUFFER, rightVertexBuffer);
   var rightPosition = rightGL.getAttribLocation(rightShaderProgram, "aPosition");
   rightGL.vertexAttribPointer(rightPosition, 3, rightGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
   rightGL.enableVertexAttribArray(rightPosition);
-
-  var leftcolor = leftGL.getAttribLocation(leftShaderProgram, "aColor");
-  leftGL.vertexAttribPointer(leftcolor, 3, leftGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
-  leftGL.enableVertexAttribArray(leftcolor);
 
   var rightcolor = rightGL.getAttribLocation(rightShaderProgram, "aColor");
   rightGL.vertexAttribPointer(rightcolor, 3, rightGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
@@ -258,9 +258,9 @@ function main() {
         rightGL.uniformMatrix4fv(rightModel, false, new Float32Array(rightModelMatrix));
         
         leftGL.clear(leftGL.COLOR_BUFFER_BIT | rightGL.DEPTH_BUFFER_BIT);
-        leftGL.drawArrays(leftGL.TRIANGLES, 0, cubeVertices.length);
+        leftGL.drawArrays(leftGL.TRIANGLES, 0, rectangleVertices.length/5);
         rightGL.clear(rightGL.COLOR_BUFFER_BIT | rightGL.DEPTH_BUFFER_BIT);
-        rightGL.drawArrays(rightGL.TRIANGLES, 0, cubeVertices.length);
+        rightGL.drawArrays(rightGL.TRIANGLES, 0, cubeVertices.length/6);
         requestAnimationFrame(render);
   }
   leftGL.clearColor(0.75, 0.75, 0.75, 1.0);
