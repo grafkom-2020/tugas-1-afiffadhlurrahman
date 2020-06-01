@@ -172,17 +172,14 @@ function main() {
     var leftVertexShaderCode = `
     attribute vec2 aPosition;
     uniform mat4 uModel;
-    attribute vec3 aColor;
-    varying vec3 vColor;
     void main(void) {
       gl_Position = uModel * vec4(aPosition, -0.7, 1.0);
     }
   `
   var leftFragmentShaderCode = `
     precision mediump float;
-    varying vec3 vColor;
     void main() {
-      gl_FragColor = vec4(vColor, 1.0);
+      gl_FragColor = vec4(0.6, 0.6, 0.6, 1.0);
     }
   `
     var rightVertexShaderCode = `
@@ -240,10 +237,6 @@ function main() {
   rightGL.vertexAttribPointer(rightPosition, 3, rightGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
   rightGL.enableVertexAttribArray(rightPosition);
 
-  var leftcolor = leftGL.getAttribLocation(leftShaderProgram, "aColor");
-  leftGL.vertexAttribPointer(leftcolor, 3, leftGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
-  leftGL.enableVertexAttribArray(leftcolor);
-
   var rightcolor = rightGL.getAttribLocation(rightShaderProgram, "aColor");
   rightGL.vertexAttribPointer(rightcolor, 3, rightGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
   rightGL.enableVertexAttribArray(rightcolor);
@@ -294,9 +287,9 @@ function main() {
         rightGL.uniformMatrix4fv(rightModel, false, new Float32Array(rightModelMatrix));
         
         leftGL.clear(leftGL.COLOR_BUFFER_BIT | rightGL.DEPTH_BUFFER_BIT);
-        leftGL.drawArrays(leftGL.TRIANGLES, 0, cubeVertices.length);
+        leftGL.drawArrays(leftGL.TRIANGLES, 0, rectangleVertices.length/2);
         rightGL.clear(rightGL.COLOR_BUFFER_BIT | rightGL.DEPTH_BUFFER_BIT);
-        rightGL.drawArrays(rightGL.TRIANGLES, 0, cubeVertices.length);
+        rightGL.drawArrays(rightGL.TRIANGLES, 0, cubeVertices.length/6);
         requestAnimationFrame(render);
   }
     leftGL.clearColor(0.75, 0.75, 0.75, 1.0);
